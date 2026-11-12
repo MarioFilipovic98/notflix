@@ -1,0 +1,37 @@
+name: Build custom Android TV APK
+
+on:
+  push:
+    branches: [codex/android-tv-build]
+
+permissions:
+  contents: read
+
+jobs:
+  android-tv:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 35
+    env:
+      CI_USE_DEBUG_SIGNING: 'true'
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '21'
+      - name: Prepare Android SDK
+        run: sdkmanager 'platforms;android-36' 'build-tools;35.0.0'
+      - name: Assemble Android TV APKs
+        run: bash gradlew --no-daemon --stacktrace :app:assembleFullRelease -PnotflixGithubOwner=MarioFilipovic98 -PnotflixGithubRepo=notflix
+      - name: Upload 32-bit ARM APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Notflix-armeabi-v7a
+          path: app/build/outputs/apk/full/release/*armeabi-v7a*.apk
+          if-no-files-found: error
+      - name: Upload emulator APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: Notflix-x86_64-preview
+          path: app/build/outputs/apk/full/release/*x86_64*.apk
+          if-no-files-found: error
