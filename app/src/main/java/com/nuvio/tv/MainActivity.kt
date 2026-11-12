@@ -1395,14 +1395,16 @@ open class MainActivity : ComponentActivity() {
                                         homeRoute = Screen.Home.route,
                                         destinations = shellDrawerItems.map { NotflixDestination(it.route, it.label) },
                                         contentFocusRequester = contentFocusRequester,
-                                        profileName = activeProfile?.name?.takeIf { profiles.size > 1 },
+                                        profileName = activeProfile?.name,
                                         onSwitchProfile = handleSwitchProfile,
                                         onNavigate = { target ->
                                             optimisticRoute = target
                                             navigateToDrawerRoute(navController, currentRoute, target)
                                         },
                                         onExit = handleExitApp,
-                                        longPressBackHeld = longPressBackHeld
+                                        longPressBackHeld = longPressBackHeld,
+                                        profileAvatarUrl = activeProfileAvatarImageUrl,
+                                        canSwitchProfile = profiles.size > 1
                                     )
                                 } else if (modernSidebarEnabled) {
                                     rememberModernSidebarShell(

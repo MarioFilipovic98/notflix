@@ -60,15 +60,15 @@ class NotflixNavigationInputTest {
     }
     @Test fun heldBarMovesBeforeReleaseAndOnlyOkNavigates() {
         show()
-        compose.onNodeWithTag("notflix-destination-home").requestFocus()
+        compose.onNodeWithTag("notflix-destination-profile").requestFocus()
         native(android.view.KeyEvent.KEYCODE_DPAD_RIGHT, android.view.KeyEvent.ACTION_DOWN)
-        compose.onNodeWithTag("notflix-destination-discover").assertIsFocused()
-        native(android.view.KeyEvent.KEYCODE_DPAD_RIGHT, android.view.KeyEvent.ACTION_DOWN, 1, true)
         compose.onNodeWithTag("notflix-destination-search").assertIsFocused()
+        native(android.view.KeyEvent.KEYCODE_DPAD_RIGHT, android.view.KeyEvent.ACTION_DOWN, 1, true)
+        compose.onNodeWithTag("notflix-destination-home").assertIsFocused()
         native(android.view.KeyEvent.KEYCODE_DPAD_RIGHT, android.view.KeyEvent.ACTION_UP)
         compose.runOnIdle { assertTrue(actions.isEmpty()) }
-        compose.onNodeWithTag("notflix-destination-search").performKeyInput { keyDown(Key.DirectionCenter); keyUp(Key.DirectionCenter) }
-        compose.runOnIdle { assertEquals(listOf("search"), actions) }
+        compose.onNodeWithTag("notflix-destination-home").performKeyInput { keyDown(Key.DirectionCenter); keyUp(Key.DirectionCenter) }
+        compose.runOnIdle { assertEquals(listOf("home"), actions) }
     }
     @Test fun allOfficialTabsAndLongProfileFitInLtrAndRtlWithCorrectArrowOrder() {
         val direction = mutableStateOf(LayoutDirection.Ltr)
@@ -81,9 +81,9 @@ class NotflixNavigationInputTest {
                 val bounds = node.getUnclippedBoundsInRoot()
                 assertTrue("Focused $route clipped in $direction: $bounds / $viewport", bounds.left >= viewport.left && bounds.right <= viewport.right)
             }
-            compose.onNodeWithTag("notflix-destination-home").requestFocus()
+            compose.onNodeWithTag("notflix-destination-profile").requestFocus()
                 .performKeyInput { val key = if (rtl) Key.DirectionLeft else Key.DirectionRight; keyDown(key); keyUp(key) }
-            compose.onNodeWithTag("notflix-destination-discover").assertIsFocused()
+            compose.onNodeWithTag("notflix-destination-search").assertIsFocused()
         }
         compose.runOnIdle { assertTrue(actions.isEmpty()) }
     }

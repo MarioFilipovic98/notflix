@@ -29,7 +29,7 @@ object NotflixVisualSpec {
     val BodyFont = InterFamily
     val BrandFont = FontFamily(Font(R.font.notflix_bebas_neue_regular))
     const val GUTTER = 34
-    const val NAV_HEIGHT = 44
+    const val NAV_HEIGHT = 60
     const val HERO_HEIGHT = 390
     const val FOCUS_MS = 120
     const val EXPAND_MS = 180
