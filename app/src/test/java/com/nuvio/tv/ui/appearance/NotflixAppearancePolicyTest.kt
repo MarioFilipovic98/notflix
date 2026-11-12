@@ -16,6 +16,7 @@ class NotflixAppearancePolicyTest {
     }
     @Test fun publicNotflixReleaseExposesNotflixButNuvioPackagesNever() {
         assertTrue(AppearancePolicy.laboratoryAvailable("full", "release", "com.notflix.tv", true))
+        assertTrue(AppearancePolicy.laboratoryAvailable("full", "release", "com.notflix.custom.tv", true))
         assertFalse(AppearancePolicy.laboratoryAvailable("full", "release", "com.nuvio.tv", true))
         assertFalse(AppearancePolicy.laboratoryAvailable("playstore", "release", "com.notflix.tv", true))
         assertFalse(AppearancePolicy.laboratoryAvailable("full", "benchmark", "com.notflix.tv.debug", true))

@@ -10,11 +10,11 @@ object AppearancePolicy {
     val NOTFLIX_AVAILABLE = laboratoryAvailable(BuildConfig.FLAVOR, BuildConfig.BUILD_TYPE,
         BuildConfig.APPLICATION_ID, RENDERER_READY)
 
-    /** The full lab build and the public Notflix release; never Nuvio's own packages or other variants. */
+    /** Allows the full lab build and both Notflix release packages. */
     fun laboratoryAvailable(flavor: String, buildType: String, applicationId: String, rendererReady: Boolean): Boolean =
         rendererReady && flavor == "full" && (
             (buildType == "debug" && applicationId == "com.nuviodebug.com") ||
-                (buildType == "release" && applicationId == "com.notflix.tv"))
+                (buildType == "release" && applicationId in setOf("com.notflix.tv", "com.notflix.custom.tv")))
 
     fun effective(requested: AppAppearance, available: Boolean = NOTFLIX_AVAILABLE): AppAppearance =
         if (available) requested else AppAppearance.NUVIO

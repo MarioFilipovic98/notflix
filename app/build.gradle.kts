@@ -142,8 +142,8 @@ android {
     ndkVersion = "29.0.14206865"
 
     defaultConfig {
-        // Notflix: its own package so it installs next to the official Nuvio app instead of over it.
-        applicationId = "com.notflix.tv"
+        // The fork installs alongside the official Notflix release.
+        applicationId = "com.notflix.custom.tv"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         minSdk = 24
         targetSdk = 36
